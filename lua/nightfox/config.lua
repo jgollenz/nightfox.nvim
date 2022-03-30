@@ -75,6 +75,7 @@ end
 
 function M.reset()
   M.options = collect.deep_copy(defaults)
+  M.has_options = false
 end
 
 return M

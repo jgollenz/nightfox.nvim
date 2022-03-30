@@ -3,15 +3,15 @@ local M = {}
 local override = {}
 
 function override.palettes(palettes)
-  require("nightfox.override").palettes = palettes
+  require("nightfox.store").palettes = palettes
 end
 
 function override.specs(specs)
-  require("nightfox.override").specs = specs
+  require("nightfox.store").specs = specs
 end
 
 function override.groups(groups)
-  require("nightfox.override").groups = groups
+  require("nightfox.store").groups = groups
 end
 
 M.override = override
@@ -30,6 +30,14 @@ end
 
 function M.status()
   require("nightfox.lib.compile").status()
+end
+
+function M.register(name, pallet, opts)
+  opts = opts or {}
+  require("nightfox.palette").register(name, pallet, light)
+  if opts.spec_fn then
+    require("nightfox.spec").register(name, opts.spec_fn)
+  end
 end
 
 function M.setup(opts)

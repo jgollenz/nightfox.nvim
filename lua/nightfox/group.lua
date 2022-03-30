@@ -4,7 +4,7 @@ local template = require("nightfox.util.template")
 local M = {}
 
 function M.load(spec)
-  local ovr = require("nightfox.override").groups
+  local ovr = require("nightfox.store").groups
   local config = require("nightfox.config").options
 
   local editor = require("nightfox.group.editor").get(spec, config)

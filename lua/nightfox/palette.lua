@@ -1,3 +1,4 @@
+local C = require("nightfox.lib.color")
 local collect = require("nightfox.lib.collect")
 
 --#region Types
@@ -33,6 +34,8 @@ local collect = require("nightfox.lib.collect")
 
 --#endregion
 
+local store = {}
+
 local M = {}
 
 M.foxes = {
@@ -43,6 +46,17 @@ M.foxes = {
   "nordfox",
   "terafox",
 }
+
+function M.register(name, palette, light)
+  table.insert(M.foxes, name)
+  store[name] = {
+    palette = palette,
+    meta = {
+      name = name,
+      light = light or false,
+    }
+  }
+end
 
 local function override(color, ovr)
   local color_list = { "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white", "orange", "pink" }
@@ -69,11 +83,14 @@ local function override(color, ovr)
 end
 
 function M.load(name)
-  local ovr = require("nightfox.override").palettes
+  local ovr = require("nightfox.store").palettes
 
   if name then
     local valid = collect.contains(M.foxes, name)
-    local raw = valid and require("nightfox.palette." .. name) or require("nightfox.palette.nightfox")
+    local raw = valid and store[name] and store[name]
+      or require("nightfox.palette." .. name)
+      or require("nightfox.palette.nightfox")
+
     local palette = ovr[name] and override(raw.palette, ovr[name]) or raw.palette
     palette.meta = raw.meta
     palette.generate_spec = raw.generate_spec

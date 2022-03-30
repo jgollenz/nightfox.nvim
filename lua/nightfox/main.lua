@@ -42,9 +42,18 @@ local function set_terminal_colors(spec)
   end
 end
 
-function M.load(name)
+---Load nightfox settings and apply highlight
+---@param opts string|table
+function M.load(opts)
+  local name, trigger
+  if type(opts) == "table" then
+    name = opts["name"]
+    trigger = opts['trigger']
+  elseif type(opts) == "string" then
+    name = opts
+  end
+
   local config = require("nightfox.config")
-  local override = require("nightfox.override")
   name = name or config.fox
 
   local precompiled_file = util.join_paths(
@@ -52,23 +61,43 @@ function M.load(name)
     name .. config.options.compile_file_suffix .. ".lua"
   )
 
+  -- If there is a precompiled file defined by `NightfoxCompile` command then
+  -- Source this file and we are finished.
   if util.exists(precompiled_file) then
     cmd("luafile " .. precompiled_file)
-  elseif not override.has_override and not config.has_options and not vim.g.nightfox_debug then
-    local modname = "nightfox.precompiled." .. name .. "_compiled"
-    package.loaded[modname] = nil
-    require(modname)
-  else
-    local spec = require("nightfox.spec").load(name)
-    local groups = require("nightfox.group").load(spec)
+    return
+  end
 
-    clear_hl()
-    set_info(spec)
-    hl.highlight(groups)
+  local store = require("nightfox.store")
 
-    if config.options.terminal_colors then
-      set_terminal_colors(spec)
+  -- Attempt to require the precompiled file contents if we are not debugging
+  -- and there is no setup defined for pre-built styles
+  if store.is_empty() and config.has_options and not vim.g.nightfox_debug then
+    local precompiled_modname = "nightfox.precompiled." .. name .. "_compiled"
+    package.loaded[precompiled_modname] = nil
+    local success, _ = pcall(require, precompiled_modname)
+    if success then
+      return
     end
+  end
+
+  -- This is either one of three states:
+  --  - debugging
+  --  - custom settings with no precompiled file
+  --  - custom registered theme with no precompiled file
+  local spec = require("nightfox.spec").load(name)
+  local groups = require("nightfox.group").load(spec)
+
+  clear_hl()
+  set_info(spec)
+  hl.highlight(groups)
+
+  if config.options.terminal_colors then
+    set_terminal_colors(spec)
+  end
+
+  if trigger then
+    cmd("doautoall ColorScheme")
   end
 end
 

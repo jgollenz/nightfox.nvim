@@ -1,3 +1,4 @@
+local C = require("nightfox.lib.color")
 local config = require("nightfox.config").options
 local util = require("nightfox.util")
 
