@@ -7,6 +7,7 @@ It comes with multiple different styles to suite your preference. These are:
 - `Dayfox`
 - `Dawnfox`
 - `Duskfox`
+- `Gruvfox`
 - `Nordfox`
 - `Terafox`
 
