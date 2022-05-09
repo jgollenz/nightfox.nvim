@@ -581,6 +581,7 @@ There are [extra](./extra) configuration files for the following:
 
 - [catppuccin](https://github.com/catppuccin/nvim/) (integration/modules)
 - [rose-pine](https://github.com/rose-pine/nvim) (dawnfox/duskfox)
+- [gruvbox](https://github.com/ellisonleao/gruvbox.nvim) (gruvfox)
 - [coolers](https://coolers.co) (useful color information and palette tool)
 - [colorhexa](https://www.colorhexa.com/) (detailed color information)
 - [neogit](https://github.com/TimUntersberger/neogit/blob/b688a2c/lua/neogit/lib/color.lua) (base for color lib)
@@ -592,11 +593,6 @@ Some themes were inspired by wallpapers.
 <details>
 <summary>Nordfox</summary>
 <img src="https://i.imgur.com/LzJYkpS.jpeg" alt="nordfox_reference" />
-</details>
-
-<details>
-<summary>Gruvfox</summary>
-<img src="https://i.imgur.com/LzJYkpS.jpeg" alt="gruvfox_reference" />
 </details>
 
 <details>

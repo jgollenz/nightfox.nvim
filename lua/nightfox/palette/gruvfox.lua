@@ -42,11 +42,11 @@ local palette = {
 local function generate_spec(pal)
   -- stylua: ignore start
   local spec = {
-    bg0  = pal.bg0,  -- Dark bg (status line and float)
-    bg1  = pal.bg0,  -- Default bg
-    bg2  = pal.pink.base,  -- Lighter bg (colorcolm folds)
-    bg3  = pal.pink.base,  -- Lighter bg (cursor line)
-    bg4  = pal.pink.base,  -- Conceal, border fg
+    bg0  = pal.bg2,         -- Dark bg (status line and float)
+    bg1  = pal.bg0,         -- Default bg
+    bg2  = pal.bg1,         -- Lighter bg (colorcolm folds)
+    bg3  = pal.bg3,         -- Lighter bg (cursor line)
+    bg4  = pal.fg3,         -- Conceal, border fg
 
     fg0  = pal.fg0,  -- Lighter fg
     fg1  = pal.fg1,  -- Default fg
@@ -58,7 +58,8 @@ local function generate_spec(pal)
   }
 
   spec.syntax = {
-    bracket     = spec.fg1,           -- Brackets and Punctuation
+    -- TODO slightly too bright
+    bracket     = spec.fg2,           -- Brackets and Punctuation
     builtin0    = pal.orange.bright,       -- Builtin variable
     builtin1    = pal.cyan.bright,    -- Builtin type
     builtin2    = pal.orange.bright,  -- Builtin const
@@ -78,8 +79,7 @@ local function generate_spec(pal)
     statement   = pal.magenta.base,   -- Statements
     string      = pal.green.bright,         -- Strings
     type        = pal.yellow.bright,        -- Types
-    -- TODO this is a bit off, compared to ellisonleao version
-    variable    = pal.fg0,            -- Variables
+    variable    = pal.fg1,                  -- Variables
   }
 
   spec.diag = {
